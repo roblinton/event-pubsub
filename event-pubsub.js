@@ -24,9 +24,9 @@ function unsub(type,handler){
             delete this._events_;
         }
         else{
-            Object.keys(this._events_).map(function (t) {
+            for(var t in this._events_){
                 removeHandlers.apply(this, [t, handler]);
-            });
+            };
         }
     }
     else{
@@ -39,14 +39,11 @@ function unsub(type,handler){
 
 function removeHandlers(type, handler){
     var events = this._events_[type],
-        i = events.length-1;
-    while (i >= 0){
+        i = events.length;
+    while(i--){
         if(events[i]==handler) events.splice(i,1);
-        else i--;
     }
-    if(events.length<1){
-        delete this._events_[type];
-    }
+    if(events.length<1) delete this._events_[type];
 }
 
 function pub(type){
